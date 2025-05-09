@@ -5,30 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cek Resi</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body { font-family: sans-serif; padding: 20px; max-width: 800px; margin: auto; }
+    body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
     input, select, button { padding: 10px; margin: 5px 0; width: 100%; box-sizing: border-box; height: 44px; }
     .hasil { background: #f1f1f1; padding: 10px; margin-top: 15px; white-space: pre-wrap; }
     #awb-container { display: none; }
-    .spinner {
-      border: 6px solid #f3f3f3;
-      border-top: 6px solid #007bff;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-      margin: 20px auto;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
     .loading-container {
       text-align: center;
       padding: 20px;
-    }
-    .icon {
-      width: 20px; height: 20px; margin-right: 5px; vertical-align: middle;
     }
     .popup {
       display: none; position: fixed; top: 30%; left: 50%; transform: translate(-50%, -30%);
@@ -56,38 +41,20 @@
       margin-top: 10px;
       flex-wrap: wrap;
     }
-    .whatsapp-link, .print-link {
-      padding: 10px;
-      border-radius: 5px;
-      text-align: center;
-      flex: 1;
-      text-decoration: none;
-      height: 44px;
+    .share-container a {
       display: flex;
       align-items: center;
-      justify-content: center;
+      gap: 8px;
       font-size: 16px;
-      width: 100%;
+      text-decoration: none;
+      color: inherit;
     }
-    .whatsapp-link {
-      background-color: #25D366;
-      color: white;
-    }
-    .whatsapp-link:hover {
-      background-color: #1ebe5d;
-    }
-    .print-link {
-      background-color: #f44336;
-      color: white;
-    }
-    .print-link:hover {
-      background-color: #d73833;
-    }
-    .grid-container {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
+    .whatsapp-link { color: #25D366; }
+    .whatsapp-link:hover { color: #1ebe5d; }
+    .print-link { color: #f44336; }
+    .print-link:hover { color: #d73833; }
+    ul { padding-left: 20px; }
+    li { margin-bottom: 5px; cursor: pointer; }
     @media screen and (max-width: 600px) {
       input, select, button { width: 100%; font-size: 16px; }
       .share-container { flex-direction: column; }
@@ -97,42 +64,27 @@
 <body>
   <h2>🔍 Cek Resi Pengiriman</h2>
 
-  <div class="grid-container">
-    <!-- Form Cek Resi -->
-    <div>
-      <label>Kurir:</label>
-      <select id="courier" onchange="showAwbField()">
-        <option value="">-- Pilih kurir --</option>
-        <option value="jnt">J&T</option>
-        <option value="jne">JNE</option>
-        <option value="sicepat">SiCepat</option>
-        <option value="anteraja">AnterAja</option>
-      </select>
+  <label>Kurir:</label>
+  <select id="courier" onchange="showAwbField()">
+    <option value="">-- Pilih kurir --</option>
+    <option value="jnt">J&T</option>
+    <option value="jne">JNE</option>
+    <option value="sicepat">SiCepat</option>
+    <option value="anteraja">AnterAja</option>
+  </select>
 
-      <div id="awb-container">
-        <label>No. Resi:</label>
-        <input type="text" id="awb" placeholder="Masukkan nomor resi..." />
-        <button onclick="cekResi()">Cek Resi</button>
-      </div>
-
-      <div class="hasil" id="hasil"></div>
-      <ul id="history-list"></ul>
-    </div>
+  <div id="awb-container">
+    <label>No. Resi:</label>
+    <input type="text" id="awb" placeholder="Masukkan nomor resi..." />
+    <button onclick="cekResi()">Cek Resi</button>
   </div>
+
+  <div class="hasil" id="hasil"></div>
+  <ul id="history-list"></ul>
 
   <div class="popup" id="popup">
     <p><strong>nulis yang bener donk ah</strong></p>
     <button onclick="closeModal()">TUTUP</button>
-  </div>
-
-  <div class="popup" id="popup-delivered">
-    <p><strong>Akhirnya sampe juga, pegel juga nganter paket bro</strong></p>
-    <button onclick="closeDeliveredModal()">TUTUP</button>
-  </div>
-
-  <div class="popup" id="popup-manifes">
-    <p><strong>Bentar santai dulu kawan, rebahan bentar</strong></p>
-    <button onclick="closeManifesModal()">TUTUP</button>
   </div>
 
   <script>
@@ -149,22 +101,6 @@
 
     function closeModal() {
       document.getElementById("popup").style.display = "none";
-    }
-
-    function showDeliveredModal() {
-      document.getElementById("popup-delivered").style.display = "block";
-    }
-
-    function closeDeliveredModal() {
-      document.getElementById("popup-delivered").style.display = "none";
-    }
-
-    function showManifesModal() {
-      document.getElementById("popup-manifes").style.display = "block";
-    }
-
-    function closeManifesModal() {
-      document.getElementById("popup-manifes").style.display = "none";
     }
 
     function generateWhatsAppLink(data) {
@@ -187,7 +123,7 @@
 
       if (!awb) return hasilDiv.textContent = "❗ Masukkan nomor resi.";
 
-      hasilDiv.innerHTML = `<div class="loading-container"><div class="spinner"></div><p>kalo lama ngopi dulu aja ☕</p></div>`;
+      hasilDiv.innerHTML = `<div class="loading-container"><i class="fas fa-mug-hot fa-2x"></i><p>kalo lama ngopi dulu aja</p></div>`;
       historyList.innerHTML = "";
 
       try {
@@ -206,30 +142,34 @@
             `Dikirim oleh: ${info.detail.shipper}<br>` +
             `Tujuan: ${info.detail.receiver}<br>` +
             `<div class="share-container">
-              <a class="whatsapp-link" href="${generateWhatsAppLink(info)}" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/1200px-WhatsApp.svg.png" alt="WhatsApp" width="24" height="24"> WhatsApp</a>
-              <a class="print-link" href="javascript:window.print()"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Print_icon.svg" alt="Print" width="24" height="24"> Print</a>
+              <a class="whatsapp-link" href="${generateWhatsAppLink(info)}" target="_blank">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+              </a>
+              <a class="print-link" href="javascript:window.print()">
+                <i class="fas fa-print"></i> Print
+              </a>
             </div>`;
 
           historyList.innerHTML = info.history.map(x => {
-            let icon = "📦";
+            let icon = "<i class='fas fa-box'></i>";
             const status = x.desc.toLowerCase();
-            if (status.includes("delivered")) icon = "👤";
-            else if (status.includes("manifes")) icon = "😴";
-            return `<li onclick="handleHistoryClick('${status}')">${icon} [${x.date}] ${x.desc}</li>`;
+            let onclick = "";
+            if (status.includes("delivered")) {
+              icon = "<i class='fas fa-user-check'></i>";
+              onclick = "onclick=\"alert('Akhirnya sampe juga, pegel juga nganter paket bro')\"";
+            } else if (status.includes("picked")) {
+              icon = "<i class='fas fa-store'></i>";
+            } else if (status.includes("manifes")) {
+              icon = "<i class='fas fa-bed'></i>";
+              onclick = "onclick=\"alert('Bentar santai dulu kawan, rebahan bentar')\"";
+            }
+            return `<li ${onclick}>${icon} [${x.date}] ${x.desc}</li>`;
           }).join("");
         } else {
           showModal();
         }
       } catch (err) {
         hasilDiv.textContent = `❌ Terjadi kesalahan: ${err.message}`;
-      }
-    }
-
-    function handleHistoryClick(status) {
-      if (status.includes("delivered")) {
-        showDeliveredModal();
-      } else if (status.includes("manifes")) {
-        showManifesModal();
       }
     }
   </script>
