@@ -190,7 +190,7 @@
           historyList.innerHTML = info.history.map(x => {
             let icon = "📦";
             let description = x.desc;
-
+ 
             // Cek apakah deskripsi mengandung kata "delivered"
             if (description.toLowerCase().includes("delivered")) {
               icon = "👤";  // Ikon untuk status "Delivered"
