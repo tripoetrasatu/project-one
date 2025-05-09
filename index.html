@@ -176,11 +176,19 @@
 
           historyList.innerHTML = info.history.map(x => {
             let icon = "📦";
-            const status = x.desc.toLowerCase();
-            if (status.includes("delivered")) icon = "👤";
-            else if (status.includes("picked")) icon = "🏬";
-            else if (status.includes("manifest")) icon = "😴";  // "MANIFES" status with "zzz" icon and new text
-            return `<li>${icon} [${x.date}] ${status.includes("manifest") ? "Lagi santai kawan, rebahan bentar dulu lah" : x.desc}</li>`;
+            let description = x.desc;
+
+            // Ubah "MANIFES" menjadi pesan khusus
+            if (description.toLowerCase() === "manifest") {
+              icon = "😴";  // Ikon tidur untuk status MANIFES
+              description = "Lagi santai kawan, rebahan bentar dulu lah";  // Pesan khusus untuk MANIFES
+            } else if (description.toLowerCase().includes("delivered")) {
+              icon = "👤"; // Ikon untuk status "Delivered"
+            } else if (description.toLowerCase().includes("picked")) {
+              icon = "🏬"; // Ikon untuk status "Picked"
+            }
+
+            return `<li>${icon} [${x.date}] ${description}</li>`;
           }).join("");
         } else {
           showModal();
