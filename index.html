@@ -7,14 +7,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+    body { font-family: sans-serif; padding: 20px; margin: auto; display: flex; flex-direction: row; gap: 20px; max-width: 1200px; }
+    .form-section { flex: 1; max-width: 600px; }
+    .blog-section { flex: 1; }
     input, select, button { padding: 10px; margin: 5px 0; width: 100%; box-sizing: border-box; height: 44px; }
     .hasil { background: #f1f1f1; padding: 10px; margin-top: 15px; white-space: pre-wrap; }
     #awb-container { display: none; }
-    .loading-container {
-      text-align: center;
-      padding: 20px;
-    }
+    .loading-container { text-align: center; padding: 20px; }
     .popup {
       display: none; position: fixed; top: 30%; left: 50%; transform: translate(-50%, -30%);
       background: white; padding: 20px; border: 2px solid red; text-align: center;
@@ -65,54 +64,119 @@
     .icon.wait { color: #e67e22; }
     .icon.whatsapp { color: #25D366; }
     .icon.print { color: #f44336; }
-    @media screen and (max-width: 600px) {
-      input, select, button { width: 100%; font-size: 16px; }
-      .share-container { flex-direction: column; }
+    .blog-card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      background: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .blog-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .blog-card .content {
+      padding: 15px;
+    }
+    .blog-card h3 {
+      margin-top: 0;
+    }
+    .blog-card p {
+      font-size: 14px;
+      color: #555;
+    }
+    .blog-card button {
+      background-color: #007bff;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    @media screen and (max-width: 768px) {
+      body { flex-direction: column; }
     }
   </style>
 </head>
 <body>
-  <h2>🔍 Cek Resi Pengiriman</h2>
-
-  <label>Kurir:</label>
-  <select id="courier" onchange="showAwbField()">
-    <option value="">-- Pilih kurir --</option>
-    <option value="jnt">J&T</option>
-    <option value="jne">JNE</option>
-    <option value="sicepat">SiCepat</option>
-    <option value="anteraja">AnterAja</option>
-  </select>
-
-  <div id="awb-container">
-    <label>No. Resi:</label>
-    <input type="text" id="awb" placeholder="Masukkan nomor resi..." />
-    <button onclick="cekResi()">Cek Resi</button>
+  <div class="form-section">
+    <h2>🔍 Cek Resi Pengiriman</h2>
+    <label>Kurir:</label>
+    <select id="courier" onchange="showAwbField()">
+      <option value="">-- Pilih kurir --</option>
+      <option value="jnt">J&T</option>
+      <option value="jne">JNE</option>
+      <option value="sicepat">SiCepat</option>
+      <option value="anteraja">AnterAja</option>
+    </select>
+    <div id="awb-container">
+      <label>No. Resi:</label>
+      <input type="text" id="awb" placeholder="Masukkan nomor resi..." />
+      <button onclick="cekResi()">Cek Resi</button>
+    </div>
+    <div class="hasil" id="hasil"></div>
+    <ul id="history-list"></ul>
+    <div class="popup" id="popup">
+      <p><strong>nulis yang bener donk ah</strong></p>
+      <button onclick="closeModal()">TUTUP</button>
+    </div>
   </div>
-
-  <div class="hasil" id="hasil"></div>
-  <ul id="history-list"></ul>
-
-  <div class="popup" id="popup">
-    <p><strong>nulis yang bener donk ah</strong></p>
-    <button onclick="closeModal()">TUTUP</button>
+  <div class="blog-section">
+    <div class="blog-card">
+      <img src="https://via.placeholder.com/600x180?text=Blog+1" alt="Blog 1">
+      <div class="content">
+        <h3>Tips Packing Aman</h3>
+        <p>Pelajari cara membungkus paket Anda agar tidak rusak selama pengiriman.</p>
+        <button>Lihat</button>
+      </div>
+    </div>
+    <div class="blog-card">
+      <img src="https://via.placeholder.com/600x180?text=Blog+2" alt="Blog 2">
+      <div class="content">
+        <h3>Menentukan Kurir Terbaik</h3>
+        <p>Bandingkan berbagai layanan pengiriman untuk kebutuhan Anda.</p>
+        <button>Lihat</button>
+      </div>
+    </div>
+    <div class="blog-card">
+      <img src="https://via.placeholder.com/600x180?text=Blog+3" alt="Blog 3">
+      <div class="content">
+        <h3>Melacak Paket Secara Real-Time</h3>
+        <p>Cara mudah melacak posisi paket Anda dari mana saja.</p>
+        <button>Lihat</button>
+      </div>
+    </div>
+    <div class="blog-card">
+      <img src="https://via.placeholder.com/600x180?text=Blog+4" alt="Blog 4">
+      <div class="content">
+        <h3>Asuransi Pengiriman</h3>
+        <p>Manfaat asuransi untuk melindungi paket Anda selama perjalanan.</p>
+        <button>Lihat</button>
+      </div>
+    </div>
+    <div class="blog-card">
+      <img src="https://via.placeholder.com/600x180?text=Blog+5" alt="Blog 5">
+      <div class="content">
+        <h3>Waktu Pengiriman Efisien</h3>
+        <p>Cara memilih waktu terbaik untuk kirim agar lebih cepat sampai.</p>
+        <button>Lihat</button>
+      </div>
+    </div>
   </div>
-
   <script>
     let currentTrackingData = null;
-
     function showAwbField() {
       const selected = document.getElementById("courier").value;
       document.getElementById("awb-container").style.display = selected ? "block" : "none";
     }
-
     function showModal() {
       document.getElementById("popup").style.display = "block";
     }
-
     function closeModal() {
       document.getElementById("popup").style.display = "none";
     }
-
     function generateWhatsAppLink(data, awb) {
       const message =
         `Kurir: ${data.summary.courier}\n` +
@@ -120,31 +184,24 @@
         `Status: ${data.summary.status}\n` +
         `Pengirim: ${data.detail.shipper}\n` +
         `Penerima: ${data.detail.receiver}`;
-
       return `https://wa.me/?text=${encodeURIComponent(message)}`;
     }
-
     async function cekResi() {
       const apiKey = "ad8ed21967aa238c6e6be1e08e88948e046bc552c069302400f4c9a6302832b6";
       const courier = document.getElementById("courier").value;
       const awb = document.getElementById("awb").value.trim();
       const hasilDiv = document.getElementById("hasil");
       const historyList = document.getElementById("history-list");
-
       if (!awb) return hasilDiv.textContent = "❗ Masukkan nomor resi.";
-
       hasilDiv.innerHTML = `<div class="loading-container"><i class="fas fa-coffee fa-2x" style="color:brown;"></i><p>kalo lama ngopi dulu aja</p></div>`;
       historyList.innerHTML = "";
-
       try {
         await new Promise(resolve => setTimeout(resolve, 5000));
         const response = await fetch(`https://api.binderbyte.com/v1/track?api_key=${apiKey}&courier=${courier}&awb=${awb}`);
         const data = await response.json();
-
         if (data.status === 200) {
           const info = data.data;
           currentTrackingData = info;
-
           hasilDiv.innerHTML =
             `Kurir: ${info.summary.courier.toUpperCase()}<br>` +
             `Resi: ${awb}<br>` +
@@ -159,12 +216,10 @@
                 <i class="fas fa-print icon print"></i> Print
               </a>
             </div>`;
-
           historyList.innerHTML = info.history.map(x => {
             let icon = '<i class="fas fa-truck icon truck"></i>';
             const status = x.desc.toLowerCase();
             let onclick = "";
-
             if (status.includes("delivered")) {
               icon = '<i class="fas fa-user-check icon user"></i>';
               onclick = "onclick=\"alert('Akhirnya sampe juga, pegel juga nganter paket bro')\"";
@@ -177,7 +232,6 @@
               icon = '<i class="fas fa-exclamation-triangle icon" style="color:red;"></i>';
               onclick = "onclick=\"alert('Yah gagal bro, bentar paling pengirim atau kurir lagi oleng')\"";
             }
-
             return `<li ${onclick}>${icon} [${x.date}] ${x.desc}</li>`;
           }).join("");
         } else {
