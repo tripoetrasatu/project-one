@@ -1,53 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Spotify Track Search</title>
+  <meta charset="UTF-8">
+  <title>Cek Resi</title>
 </head>
 <body>
-  <h1>Cari Lagu di Spotify</h1>
+  <h2>Cek Resi Pengiriman</h2>
+  <input type="text" id="resi" placeholder="Masukkan nomor resi">
+  <select id="kurir">
+    <option value="jne">JNE</option>
+    <option value="pos">POS</option>
+    <option value="jnt">J&T</option>
+  </select>
+  <button onclick="cekResi()">Cek Resi</button>
 
-  <input type="text" id="searchInput" placeholder="Masukkan nama lagu..." />
-  <button onclick="searchTrack()">Cari</button>
-
-  <ul id="resultList"></ul>
+  <pre id="hasil"></pre>
 
   <script>
-    // GANTI DENGAN TOKEN KAMU SENDIRI (dari backend / Spotify API tester)
-    const accessToken = '7a8c7fcee4274c419be65a3b06f17d6b';
+    async function cekResi() {
+      const resi = document.getElementById("resi").value;
+      const kurir = document.getElementById("kurir").value;
+      const apiKey = "YOUR_API_KEY"; // Ganti dengan API Key dari Binderbyte
 
-    async function searchTrack() {
-      const query = document.getElementById('searchInput').value;
-      if (!query) {
-        alert('Tolong masukkan nama lagu.');
-        return;
+      const url = `https://api.binderbyte.com/v1/track?api_key=${apiKey}&courier=${kurir}&awb=${resi}`;
+      
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (data.status === 200) {
+        const detail = data.data.summary;
+        const history = data.data.history;
+
+        let hasilText = `Status: ${detail.status}\nPengirim: ${detail.shipper}\nPenerima: ${detail.receiver}\n\nRiwayat:\n`;
+
+        history.forEach(item => {
+          hasilText += `${item.date} - ${item.desc}\n`;
+        });
+
+        document.getElementById("hasil").textContent = hasilText;
+      } else {
+        document.getElementById("hasil").textContent = "Resi tidak ditemukan atau format salah.";
       }
-
-      const res = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=5`, {
-        headers: {
-          'Authorization': 'Bearer ' + accessToken
-        }
-      });
-
-      if (res.status === 401) {
-        alert('Access token invalid atau expired. Silakan perbarui token.');
-        return;
-      }
-
-      const data = await res.json();
-
-      const list = document.getElementById('resultList');
-      list.innerHTML = '';
-
-      data.tracks.items.forEach(track => {
-        const li = document.createElement('li');
-        li.innerHTML = `
-          <strong>${track.name}</strong> oleh ${track.artists.map(artist => artist.name).join(', ')}<br>
-          <audio controls src="${track.preview_url}"></audio>
-        `;
-        list.appendChild(li);
-      });
     }
   </script>
 </body>
