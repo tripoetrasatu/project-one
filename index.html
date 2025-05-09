@@ -179,7 +179,7 @@
             let description = x.desc;
 
             // Ubah "MANIFES" menjadi pesan khusus
-            if (description.toLowerCase() === "manifest") {
+            if (description && description.toLowerCase().includes("manifest")) {
               icon = "😴";  // Ikon tidur untuk status MANIFES
               description = "Lagi santai kawan, rebahan bentar dulu lah";  // Pesan khusus untuk MANIFES
             } else if (description.toLowerCase().includes("delivered")) {
