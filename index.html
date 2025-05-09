@@ -178,7 +178,10 @@
             let icon = "📦";
             let description = x.desc;
 
-            // Ubah "MANIFES" menjadi pesan khusus
+            // Debugging: Tampilkan status yang diterima
+            console.log(x.desc);  // Menampilkan semua deskripsi status untuk debugging
+
+            // Cek apakah deskripsi mengandung kata "manifest"
             if (description && description.toLowerCase().includes("manifest")) {
               icon = "😴";  // Ikon tidur untuk status MANIFES
               description = "Lagi santai kawan, rebahan bentar dulu lah";  // Pesan khusus untuk MANIFES
