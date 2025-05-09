@@ -152,20 +152,20 @@
             </div>`;
 
           historyList.innerHTML = info.history.map(x => {
-            let icon = "<lord-icon src='https://cdn.lordicon.com/slkvcfos.json' trigger='loop' colors='primary:#4bb3fd,secondary:#00bcd4' style='width:24px;height:24px'></lord-icon>";
+            let icon = "<svg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6 text-gray-500' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 17h5l-1.403-1.403A7.953 7.953 0 0018 10V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v5a7.952 7.952 0 00-5.597 10.597L8 17h5'></path></svg>";
             const status = x.desc.toLowerCase();
             let onclick = "";
 
             if (status.includes("delivered")) {
-              icon = "<lord-icon src='https://cdn.lordicon.com/uqpazftn.json' trigger='hover' colors='primary:#4caf50,secondary:#81c784' style='width:24px;height:24px'></lord-icon>";
+              icon = "<svg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6 text-green-500' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path></svg>";
               onclick = "onclick=\"alert('Akhirnya sampe juga, pegel juga nganter paket bro')\"";
             } else if (status.includes("picked")) {
-              icon = "<lord-icon src='https://cdn.lordicon.com/zpxybbhl.json' trigger='loop' colors='primary:#03a9f4,secondary:#81d4fa' style='width:24px;height:24px'></lord-icon>";
+              icon = "<svg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6 text-yellow-500' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 5v14m7-7H5'></path></svg>";
             } else if (status.includes("manifes")) {
-              icon = "<lord-icon src='https://cdn.lordicon.com/hciqteio.json' trigger='loop' colors='primary:#ffc107,secondary:#ffe082' style='width:24px;height:24px'></lord-icon>";
+              icon = "<svg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6 text-blue-500' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 3v6a3 3 0 003 3h8a3 3 0 003-3V3M5 13v8a3 3 0 003 3h8a3 3 0 003-3v-8'></path></svg>";
               onclick = "onclick=\"alert('Bentar santai dulu kawan, rebahan bentar')\"";
             } else if (status.includes("pickup failed")) {
-              icon = "<lord-icon src='https://cdn.lordicon.com/egmlnyku.json' trigger='loop' colors='primary:#f44336,secondary:#ef9a9a' style='width:24px;height:24px'></lord-icon>";
+              icon = "<svg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6 text-red-500' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 18L18 6M6 6l12 12'></path></svg>";
               onclick = "onclick=\"alert('Yah gagal bro, bentar paling pengirim atau kurir lagi oleng')\"";
             }
 
