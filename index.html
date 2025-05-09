@@ -130,9 +130,9 @@
     <button onclick="closeDeliveredModal()">TUTUP</button>
   </div>
 
-  <div class="popup" id="popup-manifest">
+  <div class="popup" id="popup-manifes">
     <p><strong>Bentar santai dulu kawan, rebahan bentar</strong></p>
-    <button onclick="closeManifestModal()">TUTUP</button>
+    <button onclick="closeManifesModal()">TUTUP</button>
   </div>
 
   <script>
@@ -159,12 +159,12 @@
       document.getElementById("popup-delivered").style.display = "none";
     }
 
-    function showManifestModal() {
-      document.getElementById("popup-manifest").style.display = "block";
+    function showManifesModal() {
+      document.getElementById("popup-manifes").style.display = "block";
     }
 
-    function closeManifestModal() {
-      document.getElementById("popup-manifest").style.display = "none";
+    function closeManifesModal() {
+      document.getElementById("popup-manifes").style.display = "none";
     }
 
     function generateWhatsAppLink(data) {
@@ -214,9 +214,7 @@
             let icon = "📦";
             const status = x.desc.toLowerCase();
             if (status.includes("delivered")) icon = "👤";
-            else if (status.includes("picked")) icon = "🏬";
-            else if (status.includes("manifest")) icon = "😴";
-
+            else if (status.includes("manifes")) icon = "😴";
             return `<li onclick="handleHistoryClick('${status}')">${icon} [${x.date}] ${x.desc}</li>`;
           }).join("");
         } else {
@@ -231,7 +229,7 @@
       if (status.includes("delivered")) {
         showDeliveredModal();
       } else if (status.includes("manifes")) {
-        showManifestModal();
+        showManifesModal();
       }
     }
   </script>
