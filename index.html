@@ -6,7 +6,7 @@
   <title>Cek Resi</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    body { font-family: sans-serif; padding: 20px; max-width: 800px; margin: auto; }
+    body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
     input, select, button { padding: 10px; margin: 5px 0; width: 100%; box-sizing: border-box; height: 44px; }
     .hasil { background: #f1f1f1; padding: 10px; margin-top: 15px; white-space: pre-wrap; }
     #awb-container { display: none; }
@@ -83,54 +83,32 @@
     .print-link:hover {
       background-color: #d73833;
     }
-    .grid-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-    .grid-container iframe {
-      width: 100%;
-      height: 200px;
-    }
     @media screen and (max-width: 600px) {
       input, select, button { width: 100%; font-size: 16px; }
       .share-container { flex-direction: column; }
-      .grid-container {
-        grid-template-columns: 1fr;
-      }
     }
   </style>
 </head>
 <body>
   <h2>🔍 Cek Resi Pengiriman</h2>
 
-  <div class="grid-container">
-    <!-- Form Cek Resi -->
-    <div>
-      <label>Kurir:</label>
-      <select id="courier" onchange="showAwbField()">
-        <option value="">-- Pilih kurir --</option>
-        <option value="jnt">J&T</option>
-        <option value="jne">JNE</option>
-        <option value="sicepat">SiCepat</option>
-        <option value="anteraja">AnterAja</option>
-      </select>
+  <label>Kurir:</label>
+  <select id="courier" onchange="showAwbField()">
+    <option value="">-- Pilih kurir --</option>
+    <option value="jnt">J&T</option>
+    <option value="jne">JNE</option>
+    <option value="sicepat">SiCepat</option>
+    <option value="anteraja">AnterAja</option>
+  </select>
 
-      <div id="awb-container">
-        <label>No. Resi:</label>
-        <input type="text" id="awb" placeholder="Masukkan nomor resi..." />
-        <button onclick="cekResi()">Cek Resi</button>
-      </div>
-
-      <div class="hasil" id="hasil"></div>
-      <ul id="history-list"></ul>
-    </div>
-
-    <!-- YouTube Video -->
-    <div>
-      <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
+  <div id="awb-container">
+    <label>No. Resi:</label>
+    <input type="text" id="awb" placeholder="Masukkan nomor resi..." />
+    <button onclick="cekResi()">Cek Resi</button>
   </div>
+
+  <div class="hasil" id="hasil"></div>
+  <ul id="history-list"></ul>
 
   <div class="popup" id="popup">
     <p><strong>nulis yang bener donk ah</strong></p>
@@ -218,18 +196,26 @@
             `Dikirim oleh: ${info.detail.shipper}<br>` +
             `Tujuan: ${info.detail.receiver}<br>` +
             `<div class="share-container">
-              <a class="whatsapp-link" href="${generateWhatsAppLink(info)}" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/1200px-WhatsApp.svg.png" alt="WhatsApp" width="24" height="24"> WhatsApp</a>
-              <a class="print-link" href="javascript:window.print()"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Print_icon.svg" alt="Print" width="24" height="24"> Print</a>
+              <a class="whatsapp-link" href="${generateWhatsAppLink(info)}" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="icon" /> WhatsApp</a>
+              <a class="print-link" onclick="printPage()"><i class="fas fa-print icon"></i> Print</a>
             </div>`;
 
           historyList.innerHTML = info.history.map(x => {
             let icon = "📦";
-            const status = x.desc.toLowerCase();
-            if (status.includes("delivered")) icon = "👤";
-            else if (status.includes("picked")) icon = "🏬";
-            else if (status.includes("manifest")) icon = "😴";
+            let description = x.desc;
 
-            return `<li onclick="handleHistoryClick('${status}')">${icon} [${x.date}] ${x.desc}</li>`;
+            // Cek apakah deskripsi mengandung kata "delivered"
+            if (description.toLowerCase().includes("delivered")) {
+              icon = "🚚";  // Ikon kurir pengantar paket (menggunakan emoji pengiriman paket)
+              description = `<span onclick="showDeliveredModal()" style="color: blue; text-decoration: underline; cursor: pointer;">${description}</span>`;  // Menambahkan fungsi popup
+            } else if (description.toLowerCase().includes("manifest")) {
+              icon = "😴";  // Ikon tidur zzz untuk status manifest
+              description = `<span onclick="showManifestModal()" style="color: blue; text-decoration: underline; cursor: pointer;">${description}</span>`;  // Menambahkan fungsi popup
+            } else if (description.toLowerCase().includes("picked")) {
+              icon = "🏬"; // Ikon untuk status "Picked"
+            }
+
+            return `<li>${icon} [${x.date}] ${description}</li>`;
           }).join("");
         } else {
           showModal();
@@ -239,12 +225,8 @@
       }
     }
 
-    function handleHistoryClick(status) {
-      if (status.includes("delivered")) {
-        showDeliveredModal();
-      } else if (status.includes("manifest")) {
-        showManifestModal();
-      }
+    function printPage() {
+      window.print();
     }
   </script>
 </body>
