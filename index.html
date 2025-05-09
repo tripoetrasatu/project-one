@@ -60,15 +60,15 @@
 
     /* CSS untuk Mempercantik Ikon */
     .bi {
-      font-size: 36px; /* Ukuran besar untuk ikon */
+      font-size: 24px; /* Ukuran lebih kecil untuk ikon */
       transition: all 0.3s ease-in-out; /* Efek transisi saat hover */
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Bayangan ringan pada ikon */
       border-radius: 50%; /* Membuat ikon berbentuk bulat */
-      padding: 10px; /* Memberikan ruang di sekitar ikon */
+      padding: 6px; /* Memberikan ruang di sekitar ikon */
     }
 
     .bi:hover {
-      transform: scale(1.1); /* Efek zoom saat hover */
+      transform: scale(1.2); /* Efek zoom saat hover */
       box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); /* Bayangan lebih besar */
       cursor: pointer; /* Mengubah kursor menjadi pointer */
     }
@@ -145,7 +145,7 @@
 
       if (!awb) return hasilDiv.textContent = "❗ Masukkan nomor resi.";
 
-      hasilDiv.innerHTML = `<div class="loading-container"><i class="bi bi-cup-hot text-warning" style="font-size: 50px;"></i><p>kalo lama ngopi dulu aja</p></div>`;
+      hasilDiv.innerHTML = `<div class="loading-container"><i class="bi bi-cup-hot text-warning" style="font-size: 40px;"></i><p>kalo lama ngopi dulu aja</p></div>`;
       historyList.innerHTML = "";
 
       try {
@@ -173,20 +173,20 @@
             </div>`;
 
           historyList.innerHTML = info.history.map(x => {
-            let icon = "<i class='bi bi-clock text-muted'></i>"; // Default icon with muted color
+            let icon = "<i class='bi bi-truck text-muted'></i>"; // Default icon for other statuses (truck)
             const status = x.desc.toLowerCase();
             let onclick = "";
 
             if (status.includes("delivered")) {
-              icon = "<i class='bi bi-check-circle text-success'></i>"; // Delivered icon with green color
+              icon = "<i class='bi bi-person-check text-success'></i>"; // Delivered icon (person check)
               onclick = "onclick=\"alert('Akhirnya sampe juga, pegel juga nganter paket bro')\"";
             } else if (status.includes("picked")) {
-              icon = "<i class='bi bi-bag-check text-info'></i>"; // Picked icon with blue color
+              icon = "<i class='bi bi-shop text-info'></i>"; // Picked icon (store)
             } else if (status.includes("manifes")) {
-              icon = "<i class='bi bi-file-earmark-text text-warning'></i>"; // Manifes icon with yellow color
+              icon = "<i class='bi bi-sleep text-warning'></i>"; // Manifes icon (sleep)
               onclick = "onclick=\"alert('Bentar santai dulu kawan, rebahan bentar')\"";
             } else if (status.includes("pickup failed")) {
-              icon = "<i class='bi bi-x-circle text-danger'></i>"; // Pickup failed icon with red color
+              icon = "<i class='bi bi-x-circle text-danger'></i>"; // Pickup failed icon (cross)
               onclick = "onclick=\"alert('Yah gagal bro, bentar paling pengirim atau kurir lagi oleng')\"";
             }
 
