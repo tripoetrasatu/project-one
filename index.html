@@ -49,24 +49,37 @@
     button:hover {
       background-color: #0056b3;
     }
+    .share-container {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
     .whatsapp-button {
       background-color: #25D366 !important;
       color: white !important;
       padding: 10px;
       border-radius: 5px;
       display: inline-block;
-      margin-top: 10px;
       text-decoration: none;
+      flex: 1;
+      text-align: center;
     }
     .whatsapp-button:hover {
       background-color: #1ebe5d !important;
     }
     .pdf-button {
       background-color: #f44336;
-      margin-left: 10px;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      flex: 1;
+      text-align: center;
     }
     @media screen and (max-width: 600px) {
       input, select, button { width: 100%; font-size: 16px; }
+      .share-container { flex-direction: column; }
     }
   </style>
 </head>
@@ -144,14 +157,16 @@
           const info = data.data;
           currentTrackingData = info;
 
-          hasilDiv.innerHTML = 
+          hasilDiv.innerHTML =
             `Kurir: ${info.summary.courier.toUpperCase()}<br>` +
             `Resi: ${awb}<br>` +
             `Status: ${info.summary.status}<br>` +
             `Dikirim oleh: ${info.detail.shipper}<br>` +
             `Tujuan: ${info.detail.receiver}<br>` +
-            `<a class="whatsapp-button" href="${generateWhatsAppLink(info)}" target="_blank">📤 Share ke WhatsApp</a>` +
-            `<button class="pdf-button" onclick="downloadPDF()">📄 Simpan ke PDF</button>`;
+            `<div class="share-container">
+              <a class="whatsapp-button" href="${generateWhatsAppLink(info)}" target="_blank">📤 Share ke WhatsApp</a>
+              <button class="pdf-button" onclick="downloadPDF()">📄 Simpan ke PDF</button>
+            </div>`;
 
           historyList.innerHTML = info.history.map(x => {
             let icon = "📦";
