@@ -124,7 +124,7 @@
 
       if (!awb) return hasilDiv.textContent = "❗ Masukkan nomor resi.";
 
-      hasilDiv.innerHTML = `<div class="loading-container"><lord-icon src="https://cdn.lordicon.com/hqymfzvj.json" trigger="loop" delay="2000" style="width:50px;height:50px"></lord-icon><p>kalo lama ngopi dulu aja</p></div>`;
+      hasilDiv.innerHTML = `<div class="loading-container"><img src="https://image.flaticon.com/icons/png/512/1969/1969364.png" alt="loading kopi" class="h-10 w-10" /><p>kalo lama ngopi dulu aja</p></div>`;
       historyList.innerHTML = "";
 
       try {
@@ -152,20 +152,20 @@
             </div>`;
 
           historyList.innerHTML = info.history.map(x => {
-            let icon = "<svg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6 text-gray-500' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 17h5l-1.403-1.403A7.953 7.953 0 0018 10V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v5a7.952 7.952 0 00-5.597 10.597L8 17h5'></path></svg>";
+            let icon = "<img src='https://image.flaticon.com/icons/png/512/1995/1995565.png' alt='In Transit' class='h-6 w-6' />";  // Ganti dengan URL Flaticon
             const status = x.desc.toLowerCase();
             let onclick = "";
 
             if (status.includes("delivered")) {
-              icon = "<svg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6 text-green-500' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path></svg>";
+              icon = "<img src='https://image.flaticon.com/icons/png/512/34/34568.png' alt='Delivered' class='h-6 w-6' />"; // Ganti dengan URL Flaticon untuk delivered
               onclick = "onclick=\"alert('Akhirnya sampe juga, pegel juga nganter paket bro')\"";
             } else if (status.includes("picked")) {
-              icon = "<svg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6 text-yellow-500' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 5v14m7-7H5'></path></svg>";
+              icon = "<img src='https://image.flaticon.com/icons/png/512/1828/1828729.png' alt='Picked' class='h-6 w-6' />"; // Ganti dengan URL Flaticon untuk picked
             } else if (status.includes("manifes")) {
-              icon = "<svg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6 text-blue-500' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 3v6a3 3 0 003 3h8a3 3 0 003-3V3M5 13v8a3 3 0 003 3h8a3 3 0 003-3v-8'></path></svg>";
+              icon = "<img src='https://image.flaticon.com/icons/png/512/184/184822.png' alt='Manifes' class='h-6 w-6' />"; // Ganti dengan URL Flaticon untuk manifiest
               onclick = "onclick=\"alert('Bentar santai dulu kawan, rebahan bentar')\"";
             } else if (status.includes("pickup failed")) {
-              icon = "<svg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6 text-red-500' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 18L18 6M6 6l12 12'></path></svg>";
+              icon = "<img src='https://image.flaticon.com/icons/png/512/1828/1828881.png' alt='Pickup Failed' class='h-6 w-6' />"; // Ganti dengan URL Flaticon untuk pickup failed
               onclick = "onclick=\"alert('Yah gagal bro, bentar paling pengirim atau kurir lagi oleng')\"";
             }
 
