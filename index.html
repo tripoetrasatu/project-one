@@ -115,6 +115,11 @@
     <button onclick="closeModal()">TUTUP</button>
   </div>
 
+  <div class="popup" id="popup-delivered">
+    <p><strong>Akhirnya sampe juga, pegel juga nganter paket bro</strong></p>
+    <button onclick="closeDeliveredModal()">TUTUP</button>
+  </div>
+
   <script>
     let currentTrackingData = null;
 
@@ -129,6 +134,14 @@
 
     function closeModal() {
       document.getElementById("popup").style.display = "none";
+    }
+
+    function showDeliveredModal() {
+      document.getElementById("popup-delivered").style.display = "block";
+    }
+
+    function closeDeliveredModal() {
+      document.getElementById("popup-delivered").style.display = "none";
     }
 
     function generateWhatsAppLink(data) {
@@ -178,15 +191,10 @@
             let icon = "📦";
             let description = x.desc;
 
-            // Debugging: Tampilkan status yang diterima
-            console.log(x.desc);  // Menampilkan semua deskripsi status untuk debugging
-
-            // Cek apakah deskripsi mengandung kata "manifest"
-            if (description && description.toLowerCase().includes("manifest")) {
-              icon = "😴";  // Ikon tidur untuk status MANIFES
-              description = "Lagi santai kawan, rebahan bentar dulu lah";  // Pesan khusus untuk MANIFES
-            } else if (description.toLowerCase().includes("delivered")) {
-              icon = "👤"; // Ikon untuk status "Delivered"
+            // Cek apakah deskripsi mengandung kata "delivered"
+            if (description.toLowerCase().includes("delivered")) {
+              icon = "👤";  // Ikon untuk status "Delivered"
+              description = `<span onclick="showDeliveredModal()" style="color: blue; text-decoration: underline; cursor: pointer;">${description}</span>`;  // Menambahkan fungsi popup
             } else if (description.toLowerCase().includes("picked")) {
               icon = "🏬"; // Ikon untuk status "Picked"
             }
