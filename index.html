@@ -163,8 +163,8 @@
             `Dikirim oleh: ${info.detail.shipper}<br>` +
             `Tujuan: ${info.detail.receiver}<br>` +
             `<div class="share-container">
-              <a class="whatsapp-button" href="${generateWhatsAppLink(info)}" target="_blank">📤 Share ke WhatsApp</a>
-              <button class="pdf-button" onclick="downloadPDF()">📄 Simpan ke PDF</button>
+              <a class="whatsapp-button" href="${generateWhatsAppLink(info)}" target="_blank">WhatsApp</a>
+              <button class="pdf-button" onclick="downloadPDF()">PDF</button>
             </div>`;
 
           historyList.innerHTML = info.history.map(x => {
