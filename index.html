@@ -139,9 +139,19 @@
           // Tampilkan riwayat pengiriman
           riwayatDiv.style.display = 'block';
           historyList.innerHTML = info.history.map(x => {
+            let icon = '';
+            // Tentukan ikon berdasarkan deskripsi status
+            if (x.desc.includes('Diterima')) {
+              icon = '<i class="fas fa-user-check"></i>';  // Ikon orang menerima paket
+            } else if (x.desc.includes('Pickup') || x.desc.includes('Dikirim')) {
+              icon = '<i class="fas fa-box"></i>';  // Ikon paket
+            } else {
+              icon = '<i class="fas fa-truck"></i>';  // Ikon truk default
+            }
+
             return `
               <div class="history-item">
-                <i class="fas fa-truck"></i>
+                ${icon}
                 <div>
                   <div class="date">${x.date}</div>
                   <div class="desc">${x.desc}</div>
