@@ -6,6 +6,7 @@
   <title>Cek Resi</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdn.lordicon.com/lordicon.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"> <!-- Bootstrap Icons CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
@@ -56,6 +57,26 @@
     .print-link:hover { color: #d73833; }
     ul { padding-left: 20px; }
     li { margin-bottom: 5px; cursor: pointer; }
+
+    /* CSS untuk Mempercantik Ikon */
+    .bi {
+      font-size: 36px; /* Ukuran besar untuk ikon */
+      transition: all 0.3s ease-in-out; /* Efek transisi saat hover */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Bayangan ringan pada ikon */
+      border-radius: 50%; /* Membuat ikon berbentuk bulat */
+      padding: 10px; /* Memberikan ruang di sekitar ikon */
+    }
+
+    .bi:hover {
+      transform: scale(1.1); /* Efek zoom saat hover */
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); /* Bayangan lebih besar */
+      cursor: pointer; /* Mengubah kursor menjadi pointer */
+    }
+
+    .bi:active {
+      transform: scale(0.95); /* Menambahkan efek klik dengan mengecilkan ikon */
+    }
+
     @media screen and (max-width: 600px) {
       input, select, button { width: 100%; font-size: 16px; }
       .share-container { flex-direction: column; }
@@ -124,7 +145,7 @@
 
       if (!awb) return hasilDiv.textContent = "❗ Masukkan nomor resi.";
 
-      hasilDiv.innerHTML = `<div class="loading-container"><img src="https://image.flaticon.com/icons/png/512/1969/1969364.png" alt="loading kopi" class="h-10 w-10" /><p>kalo lama ngopi dulu aja</p></div>`;
+      hasilDiv.innerHTML = `<div class="loading-container"><i class="bi bi-cup-hot text-warning" style="font-size: 50px;"></i><p>kalo lama ngopi dulu aja</p></div>`;
       historyList.innerHTML = "";
 
       try {
@@ -144,28 +165,28 @@
             `Tujuan: ${info.detail.receiver}<br>` +
             `<div class="share-container">
               <a class="whatsapp-link" href="${generateWhatsAppLink(info)}" target="_blank">
-                <i class="fab fa-whatsapp"></i> WhatsApp
+                <i class="bi bi-whatsapp text-success"></i> WhatsApp
               </a>
               <a class="print-link" href="javascript:window.print()">
-                <i class="fas fa-print"></i> Print
+                <i class="bi bi-printer text-danger"></i> Print
               </a>
             </div>`;
 
           historyList.innerHTML = info.history.map(x => {
-            let icon = "<img src='https://image.flaticon.com/icons/png/512/1995/1995565.png' alt='In Transit' class='h-6 w-6' />";  // Ganti dengan URL Flaticon
+            let icon = "<i class='bi bi-clock text-muted'></i>"; // Default icon with muted color
             const status = x.desc.toLowerCase();
             let onclick = "";
 
             if (status.includes("delivered")) {
-              icon = "<img src='https://image.flaticon.com/icons/png/512/34/34568.png' alt='Delivered' class='h-6 w-6' />"; // Ganti dengan URL Flaticon untuk delivered
+              icon = "<i class='bi bi-check-circle text-success'></i>"; // Delivered icon with green color
               onclick = "onclick=\"alert('Akhirnya sampe juga, pegel juga nganter paket bro')\"";
             } else if (status.includes("picked")) {
-              icon = "<img src='https://image.flaticon.com/icons/png/512/1828/1828729.png' alt='Picked' class='h-6 w-6' />"; // Ganti dengan URL Flaticon untuk picked
+              icon = "<i class='bi bi-bag-check text-info'></i>"; // Picked icon with blue color
             } else if (status.includes("manifes")) {
-              icon = "<img src='https://image.flaticon.com/icons/png/512/184/184822.png' alt='Manifes' class='h-6 w-6' />"; // Ganti dengan URL Flaticon untuk manifiest
+              icon = "<i class='bi bi-file-earmark-text text-warning'></i>"; // Manifes icon with yellow color
               onclick = "onclick=\"alert('Bentar santai dulu kawan, rebahan bentar')\"";
             } else if (status.includes("pickup failed")) {
-              icon = "<img src='https://image.flaticon.com/icons/png/512/1828/1828881.png' alt='Pickup Failed' class='h-6 w-6' />"; // Ganti dengan URL Flaticon untuk pickup failed
+              icon = "<i class='bi bi-x-circle text-danger'></i>"; // Pickup failed icon with red color
               onclick = "onclick=\"alert('Yah gagal bro, bentar paling pengirim atau kurir lagi oleng')\"";
             }
 
