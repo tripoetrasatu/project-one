@@ -141,10 +141,10 @@
           historyList.innerHTML = info.history.map(x => {
             let icon = '';
             // Tentukan ikon berdasarkan deskripsi status
-            if (x.desc.includes('Diterima')) {
+            if (x.desc.includes('DELIVERED')) {
               icon = '<i class="fas fa-user-check"></i>';  // Ikon orang menerima paket
-            } else if (x.desc.includes('Pickup') || x.desc.includes('Dikirim')) {
-              icon = '<i class="fas fa-box"></i>';  // Ikon paket
+            } else if (x.desc.includes('PICKED AND READY TO BE SHIPPED')) {
+              icon = '<i class="fas fa-store"></i>';  // Ikon toko
             } else {
               icon = '<i class="fas fa-truck"></i>';  // Ikon truk default
             }
