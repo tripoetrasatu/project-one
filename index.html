@@ -152,20 +152,20 @@
             </div>`;
 
           historyList.innerHTML = info.history.map(x => {
-            let icon = "<lord-icon src='https://cdn.lordicon.com/slkvcfos.json' trigger='loop' style='width:24px;height:24px'></lord-icon>";
+            let icon = "<lord-icon src='https://cdn.lordicon.com/slkvcfos.json' trigger='loop' colors='primary:#4bb3fd,secondary:#00bcd4' style='width:24px;height:24px'></lord-icon>";
             const status = x.desc.toLowerCase();
             let onclick = "";
 
             if (status.includes("delivered")) {
-              icon = "<lord-icon src='https://cdn.lordicon.com/uqpazftn.json' trigger='hover' style='width:24px;height:24px'></lord-icon>";
+              icon = "<lord-icon src='https://cdn.lordicon.com/uqpazftn.json' trigger='hover' colors='primary:#4caf50,secondary:#81c784' style='width:24px;height:24px'></lord-icon>";
               onclick = "onclick=\"alert('Akhirnya sampe juga, pegel juga nganter paket bro')\"";
             } else if (status.includes("picked")) {
-              icon = "<lord-icon src='https://cdn.lordicon.com/zpxybbhl.json' trigger='loop' style='width:24px;height:24px'></lord-icon>";
+              icon = "<lord-icon src='https://cdn.lordicon.com/zpxybbhl.json' trigger='loop' colors='primary:#03a9f4,secondary:#81d4fa' style='width:24px;height:24px'></lord-icon>";
             } else if (status.includes("manifes")) {
-              icon = "<lord-icon src='https://cdn.lordicon.com/hciqteio.json' trigger='loop' style='width:24px;height:24px'></lord-icon>";
+              icon = "<lord-icon src='https://cdn.lordicon.com/hciqteio.json' trigger='loop' colors='primary:#ffc107,secondary:#ffe082' style='width:24px;height:24px'></lord-icon>";
               onclick = "onclick=\"alert('Bentar santai dulu kawan, rebahan bentar')\"";
             } else if (status.includes("pickup failed")) {
-              icon = "<lord-icon src='https://cdn.lordicon.com/egmlnyku.json' trigger='loop' style='width:24px;height:24px'></lord-icon>";
+              icon = "<lord-icon src='https://cdn.lordicon.com/egmlnyku.json' trigger='loop' colors='primary:#f44336,secondary:#ef9a9a' style='width:24px;height:24px'></lord-icon>";
               onclick = "onclick=\"alert('Yah gagal bro, bentar paling pengirim atau kurir lagi oleng')\"";
             }
 
