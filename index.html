@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cek Resi</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdn.lordicon.com/lordicon.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"> <!-- Bootstrap Icons CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
@@ -16,6 +14,28 @@
     .loading-container {
       text-align: center;
       padding: 20px;
+    }
+    .popup {
+      display: none; position: fixed; top: 30%; left: 50%; transform: translate(-50%, -30%);
+      background: white; padding: 20px; border: 2px solid red; text-align: center;
+      z-index: 1000;
+    }
+    .popup button {
+      background: red; color: white; padding: 10px 20px; font-size: 18px; margin-top: 15px; cursor: pointer;
+      border: none; border-radius: 5px;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      height: 44px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #218838;
     }
     .share-container {
       display: flex;
@@ -37,40 +57,16 @@
     .print-link:hover { color: #d73833; }
     ul { padding-left: 20px; }
     li { margin-bottom: 5px; cursor: pointer; }
-
-    /* Style untuk popup */
-    .popup {
-      display: none; 
-      position: fixed; 
-      top: 30%; 
-      left: 50%; 
-      transform: translate(-50%, -30%);
-      background: white; 
-      padding: 20px; 
-      border: 2px solid red; 
-      text-align: center;
-      z-index: 1000;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-      border-radius: 10px;
+    .icon { font-size: 16px; margin-right: 6px; }
+    .icon.truck { color: #3498db; }
+    .icon.user { color: #2ecc71; }
+    .icon.store { color: #f39c12; }
+    .icon.sleep { color: #9b59b6; }
+    .icon.wait { color: #e67e22; }
+    @media screen and (max-width: 600px) {
+      input, select, button { width: 100%; font-size: 16px; }
+      .share-container { flex-direction: column; }
     }
-    .popup button {
-      background: red; 
-      color: white; 
-      padding: 10px 20px; 
-      font-size: 18px; 
-      margin-top: 15px; 
-      cursor: pointer;
-      border: none; 
-      border-radius: 5px;
-    }
-
-    /* CSS to add color to icons */
-    .icon-delivered { color: #28a745; }  /* Green for Delivered */
-    .icon-pickup { color: #17a2b8; }    /* Blue for Picked */
-    .icon-manifes { color: #ffc107; }   /* Yellow for Manifes */
-    .icon-failed { color: #dc3545; }    /* Red for Failed */
-    .icon-waiting { color: #ff9800; }   /* Orange for Waiting */
-    .icon-truck { color: #6c757d; }     /* Gray for other statuses */
   </style>
 </head>
 <body>
@@ -94,7 +90,6 @@
   <div class="hasil" id="hasil"></div>
   <ul id="history-list"></ul>
 
-  <!-- Popup custom menggunakan JavaScript -->
   <div class="popup" id="popup">
     <p><strong>nulis yang bener donk ah</strong></p>
     <button onclick="closeModal()">TUTUP</button>
@@ -109,11 +104,11 @@
     }
 
     function showModal() {
-      document.getElementById("popup").style.display = "block";  // Tampilkan popup
+      document.getElementById("popup").style.display = "block";
     }
 
     function closeModal() {
-      document.getElementById("popup").style.display = "none";  // Sembunyikan popup
+      document.getElementById("popup").style.display = "none";
     }
 
     function generateWhatsAppLink(data) {
@@ -136,7 +131,7 @@
 
       if (!awb) return hasilDiv.textContent = "❗ Masukkan nomor resi.";
 
-      hasilDiv.innerHTML = `<div class="loading-container"><i class="bi bi-cup-hot text-warning" style="font-size: 40px;"></i><p>kalo lama ngopi dulu aja</p></div>`;
+      hasilDiv.innerHTML = `<div class="loading-container"><i class="fas fa-coffee fa-2x" style="color:brown;"></i><p>kalo lama ngopi dulu aja</p></div>`;
       historyList.innerHTML = "";
 
       try {
@@ -156,35 +151,35 @@
             `Tujuan: ${info.detail.receiver}<br>` +
             `<div class="share-container">
               <a class="whatsapp-link" href="${generateWhatsAppLink(info)}" target="_blank">
-                <i class="bi bi-whatsapp text-success"></i> WhatsApp
+                <i class="fab fa-whatsapp"></i> WhatsApp
               </a>
               <a class="print-link" href="javascript:window.print()">
-                <i class="bi bi-printer text-danger"></i> Print
+                <i class="fas fa-print"></i> Print
               </a>
             </div>`;
 
           historyList.innerHTML = info.history.map(x => {
-            let icon = "<i class='bi bi-truck icon-truck'></i>"; // Default icon for other statuses (truck)
+            let icon = '<i class="fas fa-truck icon truck"></i>';
             const status = x.desc.toLowerCase();
             let onclick = "";
 
             if (status.includes("delivered")) {
-              icon = "<i class='bi bi-person-check icon-delivered'></i>"; // Delivered icon (person check)
+              icon = '<i class="fas fa-user-check icon user"></i>';
               onclick = "onclick=\"alert('Akhirnya sampe juga, pegel juga nganter paket bro')\"";
             } else if (status.includes("picked")) {
-              icon = "<i class='bi bi-shop icon-pickup'></i>"; // Picked icon (store)
+              icon = '<i class="fas fa-store icon store"></i>';
             } else if (status.includes("manifes")) {
-              icon = "<i class='bi bi-hourglass-split icon-manifes'></i>"; // Manifes icon (waiting)
+              icon = '<i class="fas fa-bed icon sleep"></i><i class=\"fas fa-clock icon wait\"></i>';
               onclick = "onclick=\"alert('Bentar santai dulu kawan, rebahan bentar')\"";
             } else if (status.includes("pickup failed")) {
-              icon = "<i class='bi bi-x-circle icon-failed'></i>"; // Pickup failed icon (cross)
+              icon = '<i class="fas fa-exclamation-triangle icon" style="color:red;"></i>';
               onclick = "onclick=\"alert('Yah gagal bro, bentar paling pengirim atau kurir lagi oleng')\"";
             }
 
             return `<li ${onclick}>${icon} [${x.date}] ${x.desc}</li>`;
           }).join("");
         } else {
-          showModal(); // Show custom popup if error occurs
+          showModal();
         }
       } catch (err) {
         hasilDiv.textContent = `❌ Terjadi kesalahan: ${err.message}`;
