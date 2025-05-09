@@ -39,30 +39,6 @@
     .print-link:hover { color: #d73833; }
     ul { padding-left: 20px; }
     li { margin-bottom: 5px; cursor: pointer; }
-
-    /* CSS untuk Mempercantik Ikon */
-    .bi {
-      font-size: 24px; /* Ukuran lebih kecil untuk ikon */
-      transition: all 0.3s ease-in-out; /* Efek transisi saat hover */
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Bayangan ringan pada ikon */
-      border-radius: 50%; /* Membuat ikon berbentuk bulat */
-      padding: 6px; /* Memberikan ruang di sekitar ikon */
-    }
-
-    .bi:hover {
-      transform: scale(1.2); /* Efek zoom saat hover */
-      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); /* Bayangan lebih besar */
-      cursor: pointer; /* Mengubah kursor menjadi pointer */
-    }
-
-    .bi:active {
-      transform: scale(0.95); /* Menambahkan efek klik dengan mengecilkan ikon */
-    }
-
-    @media screen and (max-width: 600px) {
-      input, select, button { width: 100%; font-size: 16px; }
-      .share-container { flex-direction: column; }
-    }
   </style>
 </head>
 <body>
@@ -114,13 +90,13 @@
 
     // Ganti showModal() dengan penggunaan modal Bootstrap
     function showModal() {
-      const modal = new bootstrap.Modal(document.getElementById('popupModal'));
-      modal.show();
+      const modal = new bootstrap.Modal(document.getElementById('popupModal')); // Modal instance
+      modal.show(); // Tampilkan modal
     }
 
     function closeModal() {
-      const modal = new bootstrap.Modal(document.getElementById('popupModal'));
-      modal.hide();
+      const modal = new bootstrap.Modal(document.getElementById('popupModal')); // Modal instance
+      modal.hide(); // Sembunyikan modal
     }
 
     function generateWhatsAppLink(data) {
