@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spotify Track Search</title>
+</head>
+<body>
+  <h2>Cari Lagu di Spotify</h2>
+  <input type="text" id="searchInput" placeholder="Masukkan nama lagu...">
+  <button onclick="searchTrack()">Cari</button>
+
+  <div id="results"></div>
+
+  <script>
+    const token = "YOUR_ACCESS_TOKEN"; // Ganti dengan token dari langkah sebelumnya
+
+    async function searchTrack() {
+      const query = document.getElementById("searchInput").value;
+      const response = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=5`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const data = await response.json();
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = "";
+
+      data.tracks.items.forEach(track => {
+        const trackName = track.name;
+        const artist = track.artists.map(a => a.name).join(", ");
+        const trackId = track.id;
+
+        const trackDiv = document.createElement("div");
+        trackDiv.innerHTML = `
+          <p><strong>${trackName}</strong> oleh ${artist}</p>
+          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/${trackId}" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+          <hr/>
+        `;
+
+        resultsDiv.appendChild(trackDiv);
+      });
+    }
+  </script>
+</body>
+</html>
