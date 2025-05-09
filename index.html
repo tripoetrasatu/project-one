@@ -63,6 +63,14 @@
       border: none; 
       border-radius: 5px;
     }
+
+    /* CSS to add color to icons */
+    .icon-delivered { color: #28a745; }  /* Green for Delivered */
+    .icon-pickup { color: #17a2b8; }    /* Blue for Picked */
+    .icon-manifes { color: #ffc107; }   /* Yellow for Manifes */
+    .icon-failed { color: #dc3545; }    /* Red for Failed */
+    .icon-waiting { color: #ff9800; }   /* Orange for Waiting */
+    .icon-truck { color: #6c757d; }     /* Gray for other statuses */
   </style>
 </head>
 <body>
@@ -156,20 +164,20 @@
             </div>`;
 
           historyList.innerHTML = info.history.map(x => {
-            let icon = "<i class='bi bi-truck text-muted'></i>"; // Default icon for other statuses (truck)
+            let icon = "<i class='bi bi-truck icon-truck'></i>"; // Default icon for other statuses (truck)
             const status = x.desc.toLowerCase();
             let onclick = "";
 
             if (status.includes("delivered")) {
-              icon = "<i class='bi bi-person-check text-success'></i>"; // Delivered icon (person check)
+              icon = "<i class='bi bi-person-check icon-delivered'></i>"; // Delivered icon (person check)
               onclick = "onclick=\"alert('Akhirnya sampe juga, pegel juga nganter paket bro')\"";
             } else if (status.includes("picked")) {
-              icon = "<i class='bi bi-shop text-info'></i>"; // Picked icon (store)
+              icon = "<i class='bi bi-shop icon-pickup'></i>"; // Picked icon (store)
             } else if (status.includes("manifes")) {
-              icon = "<i class='bi bi-person-sleeping text-primary'></i>"; // Manifes icon (person sleeping)
+              icon = "<i class='bi bi-hourglass-split icon-manifes'></i>"; // Manifes icon (waiting)
               onclick = "onclick=\"alert('Bentar santai dulu kawan, rebahan bentar')\"";
             } else if (status.includes("pickup failed")) {
-              icon = "<i class='bi bi-x-circle text-danger'></i>"; // Pickup failed icon (cross)
+              icon = "<i class='bi bi-x-circle icon-failed'></i>"; // Pickup failed icon (cross)
               onclick = "onclick=\"alert('Yah gagal bro, bentar paling pengirim atau kurir lagi oleng')\"";
             }
 
