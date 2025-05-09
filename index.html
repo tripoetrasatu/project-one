@@ -113,10 +113,10 @@
       document.getElementById("popup").style.display = "none";
     }
 
-    function generateWhatsAppLink(data) {
+    function generateWhatsAppLink(data, awb) {
       const message =
         `Kurir: ${data.summary.courier}\n` +
-        `Resi: ${data.summary.waybill}\n` +
+        `Resi: ${awb}\n` +
         `Status: ${data.summary.status}\n` +
         `Pengirim: ${data.detail.shipper}\n` +
         `Penerima: ${data.detail.receiver}`;
@@ -152,10 +152,10 @@
             `Dikirim oleh: ${info.detail.shipper}<br>` +
             `Tujuan: ${info.detail.receiver}<br>` +
             `<div class="share-container">
-              <a class="whatsapp-link" href="${generateWhatsAppLink(info)}" target="_blank">
+              <a class="whatsapp-link" href="${generateWhatsAppLink(info, awb)}" target="_blank">
                 <i class="fab fa-whatsapp icon whatsapp"></i> WhatsApp
               </a>
-              <a class="print-link" href="javascript:window.print()">
+              <a class="print-link" href="javascript:void(0)" onclick="window.print()">
                 <i class="fas fa-print icon print"></i> Print
               </a>
             </div>`;
