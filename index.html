@@ -63,6 +63,8 @@
     .icon.store { color: #f39c12; }
     .icon.sleep { color: #9b59b6; }
     .icon.wait { color: #e67e22; }
+    .icon.whatsapp { color: #25D366; }
+    .icon.print { color: #f44336; }
     @media screen and (max-width: 600px) {
       input, select, button { width: 100%; font-size: 16px; }
       .share-container { flex-direction: column; }
@@ -151,10 +153,10 @@
             `Tujuan: ${info.detail.receiver}<br>` +
             `<div class="share-container">
               <a class="whatsapp-link" href="${generateWhatsAppLink(info)}" target="_blank">
-                <i class="fab fa-whatsapp"></i> WhatsApp
+                <i class="fab fa-whatsapp icon whatsapp"></i> WhatsApp
               </a>
               <a class="print-link" href="javascript:window.print()">
-                <i class="fas fa-print"></i> Print
+                <i class="fas fa-print icon print"></i> Print
               </a>
             </div>`;
 
