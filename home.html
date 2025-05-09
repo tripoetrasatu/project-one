@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cek Resi Pengiriman</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input, select, button { padding: 10px; margin: 10px 0; width: 100%; box-sizing: border-box; }
+    .hasil { background: #f1f1f1; padding: 10px; margin-top: 15px; white-space: pre-wrap; }
+    .loading-container { text-align: center; padding: 20px; }
+  </style>
+</head>
+<body>
+  <h2>🔍 Cek Resi Pengiriman</h2>
+  <label for="courier">Kurir:</label>
+  <select id="courier">
+    <option value="">-- Pilih kurir --</option>
+    <option value="jnt">J&T</option>
+    <option value="jne">JNE</option>
+    <option value="sicepat">SiCepat</option>
+    <option value="anteraja">AnterAja</option>
+  </select>
+  
+  <div id="awb-container">
+    <label for="awb">No. Resi:</label>
+    <input type="text" id="awb" placeholder="Masukkan nomor resi..." />
+    <button onclick="cekResi()">Cek Resi</button>
+  </div>
+
+  <div id="hasil" class="hasil"></div>
+
+  <script>
+    async function cekResi() {
+      const apiKey = "681e30646a566f0012dd02cc";  // Ganti dengan API key Anda
+      const courier = document.getElementById("courier").value;
+      const awb = document.getElementById("awb").value.trim();
+      const hasilDiv = document.getElementById("hasil");
+
+      if (!awb) {
+        return hasilDiv.textContent = "❗ Masukkan nomor resi.";
+      }
+
+      hasilDiv.innerHTML = `<div class="loading-container"><i class="fas fa-spinner fa-spin"></i><p>Menunggu...</p></div>`;
+      
+      try {
+        const response = await fetch(`https://api.biteship.com/v1/track?tracking_number=${awb}&courier=${courier}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${apiKey}`
+          }
+        });
+        
+        const data = await response.json();
+
+        if (data.status === 'success') {
+          hasilDiv.innerHTML = `
+            <strong>Status:</strong> ${data.data.status} <br>
+            <strong>Shipper:</strong> ${data.data.shipper} <br>
+            <strong>Receiver:</strong> ${data.data.receiver} <br>
+            <strong>Tracking Number:</strong> ${awb}
+          `;
+        } else {
+          hasilDiv.textContent = "❌ Data tidak ditemukan atau API error.";
+        }
+
+      } catch (error) {
+        hasilDiv.textContent = `❌ Terjadi kesalahan: ${error.message}`;
+      }
+    }
+  </script>
+</body>
+</html>
