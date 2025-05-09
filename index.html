@@ -56,7 +56,7 @@
       margin-top: 10px;
       flex-wrap: wrap;
     }
-    .whatsapp-button, .pdf-button {
+    .whatsapp-link, .pdf-link {
       padding: 10px;
       border-radius: 5px;
       text-align: center;
@@ -69,18 +69,18 @@
       font-size: 16px;
       width: 100%;
     }
-    .whatsapp-button {
+    .whatsapp-link {
       background-color: #25D366;
       color: white;
     }
-    .whatsapp-button:hover {
+    .whatsapp-link:hover {
       background-color: #1ebe5d;
     }
-    .pdf-button {
+    .pdf-link {
       background-color: #f44336;
       color: white;
     }
-    .pdf-button:hover {
+    .pdf-link:hover {
       background-color: #d73833;
     }
     @media screen and (max-width: 600px) {
@@ -170,8 +170,8 @@
             `Dikirim oleh: ${info.detail.shipper}<br>` +
             `Tujuan: ${info.detail.receiver}<br>` +
             `<div class="share-container">
-              <a class="whatsapp-button" href="${generateWhatsAppLink(info)}" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="icon" /> WhatsApp</a>
-              <a class="pdf-button" onclick="downloadPDF()"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Pdf_file_icon.svg" class="icon" /> PDF</a>
+              <a class="whatsapp-link" href="${generateWhatsAppLink(info)}" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="icon" /> WhatsApp</a>
+              <a class="pdf-link" onclick="downloadPDF()"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Pdf_file_icon.svg" class="icon" /> PDF</a>
             </div>`;
 
           historyList.innerHTML = info.history.map(x => {
